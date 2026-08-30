@@ -1,0 +1,26 @@
+project:
+  type: book
+  output-dir: _book
+
+lang: es
+
+book:
+  title: "Álgebra Lineal: Unidad 2 - Determinantes"
+  author: "John Jairo Leal Gómez"
+  site-url: "https://asoleal.github.io/algebra-u2/"
+  repo-url: "https://github.com/asoleal/algebra-u2"
+  chapters:
+    - index.qmd
+    - 2.1-intuicion-geometrica.qmd
+    - 2.2-propiedades-determinantes.qmd
+
+format:
+  html:
+    theme: cosmo
+    math: mathjax
+    html-math-method:
+      method: mathjax
+      url: "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+  pdf:
+    pdf-engine: tectonic
+    documentclass: report
