@@ -1,0 +1,6 @@
+_book/
+.quarto/
+*.html
+*.tex
+*.md
+*_files/
