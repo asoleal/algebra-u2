@@ -1,9 +1,21 @@
 
 # Determinantes: El factor de escala del espacio
 
+## Contexto: ¿Qué mide realmente un determinante?
+
+Imagina que tienes una hoja de papel cuadrada de $1 \times 1$ (área = 1). Si aplicas una transformación lineal (una matriz) a esa hoja, esta se estirará, rotará o encogerá.
+**El determinante es exactamente ese factor de escala:** nos dice por cuánto se multiplicó el área (en 2D) o el volumen (en 3D) original.
+
+- Si $|\det(A)| = 2$, el área se duplicó.
+- Si $|\det(A)| = 0.5$, el área se redujo a la mitad.
+- Si $\det(A) = 0$, el área se hizo cero: ¡la matriz "aplastó" el espacio en una línea o un punto! (Por eso no tiene inversa: no puedes "des-aplastar" algo que perdió una dimensión).
+- Si $\det(A) < 0$, el espacio fue "volteado" (como ver una imagen en un espejo).
+
+Ahora que sabemos qué significa geométricamente, veamos cómo calcularlo algebraicamente.
+
 ## Estructura teórica matemática
 
-> **Qué aprenderá aquí.** Que el determinante no es solo una fórmula para saber si una matriz tiene inversa, sino una medida geométrica: **cuánto estira o encoge una matriz el espacio**. Veremos su definición formal inductiva y su interpretación como área y volumen.
+> **Qué aprenderá aquí.** Que el determinante no es solo una fórmula para saber si una matriz tiene inversa, sino una medida geométrica. Veremos su definición formal inductiva y su interpretación como área y volumen.
 
 ::: {#def-operacion-determinante}
 ### Operación determinante
@@ -21,65 +33,69 @@ Para una matriz $A = \begin{pmatrix} a & b \\ c & d \end{pmatrix}$, su determina
 
 $$ \det(A) = |A| = ad - bc $$
 :::
+
 ::: {#exm-matriz-2x2}
-### Matriz de $2 \times 2$
-Considere la matriz 
+### Ejemplo: Matriz de $2 \times 2$
+Considere la matriz
 
 $$ A = \begin{pmatrix} 3 & 5 \\ -1 & 2 \end{pmatrix} $$
 
-Aquí, sus entradas son $a_{11} = 3$, $a_{12} = 5$, $a_{21} = -1$ y $a_{22} = 2$
+Aquí, sus entradas son $a_{11} = 3$, $a_{12} = 5$, $a_{21} = -1$ y $a_{22} = 2$.
 
-Así que el $|A| = a_{11}a_{22}-a_{21}a_{12}=3\cdot 2 - (-1)\cdot 5 = 11$.
+Así que el determinante es $|A| = a_{11}a_{22}-a_{21}a_{12}= (3)(2) - (-1)(5) = 6 + 5 = 11$.
+*(Geométricamente, los vectores columna forman un paralelogramo cuyo área es exactamente 11).*
 :::
 
 ::: {#def-menores-cofactores}
 ### Menores y Cofactores
-Sea $A$ una matriz de $n \times n$. El **menor** $M_{ij}$ es la matriz de $(n-1) \times (n-1)$ que resulta de eliminar la fila $i$ y la columna $j$ de $A$. El **cofactor** $C_{ij}$ es un número real, que se obtiene como:
+Sea $A$ una matriz de $n \times n$. El **menor** $M_{ij}$ es el determinante de la matriz de $(n-1) \times (n-1)$ que resulta de eliminar la fila $i$ y la columna $j$ de $A$. El **cofactor** $C_{ij}$ es un número real, que se obtiene como:
 
-$$ C_{ij} = (-1)^{i+j} \det(M_{ij}) $$
+$$ C_{ij} = (-1)^{i+j} \det(M_{ij}) = (-1)^{i+j} M_{ij} $$
 
-El signo $(-1)^{i+j}$ crea una secuencia de signos positivos y negativos.
+El signo $(-1)^{i+j}$ crea una secuencia de signos positivos y negativos en forma de tablero de ajedrez.
 :::
 
-Aquí tiene el ejemplo de un cofactor para una matriz de $3 \times 3$:
-
-
 ::: {#exm-cofactor-3x3}
-### Cálculo de un cofactor en una matriz de $3 \times 3$
-Considere la matriz 
+### Ejemplo: Cálculo de un cofactor en una matriz de $3 \times 3$
+
+Considere la matriz
+
 $$ A = \begin{pmatrix} 2 & 3 & 1 \\ 4 & 1 & -2 \\ 0 & 5 & 3 \end{pmatrix} $$
 
-Para calcular el cofactor $C_{12}$, primero calculamos el menor $M_{12}$, eliminando la fial $1$ y la columna $2$
+Para calcular el cofactor $C_{12}$, primero calculamos el menor $M_{12}$, eliminando la **fila 1** y la **columna 2**:
 
 $$ A = \begin{pmatrix} \xcancel{2} & \xcancel{3} & \xcancel{1} \\ 4 & \xcancel{1} & -2 \\ 0 & \xcancel{5} & 3 \end{pmatrix} $$
 
-Obteniendo el menor:
+Obteniendo la submatriz para el menor:
 
-$$ M_{12} = \begin{pmatrix} 4 & -2 \\ 0 & 3 \end{pmatrix} $$
+$$ M_{12} = \begin{vmatrix} 4 & -2 \\ 0 & 3 \end{vmatrix} $$
 
 Luego, calculamos el determinante de este menor y lo multiplicamos por el signo $(-1)^{1+2}$:
 
 $$ \det(M_{12}) = (4)(3) - (-2)(0) = 12 $$
 
-Así que el cofactor es $C_{12} = (-1)^{1+2} \det(M_{12}) = -1 \cdot 12 = -12$.
+Así que el cofactor es $C_{12} = (-1)^{1+2} \det(M_{12}) = (-1) \cdot 12 = -12$.
 :::
 
 ::: {#def-determinante-nxn}
-### Determinante $n \times n$
+
+### Determinante $n \times n$ (Expansión por cofactores)
 El determinante de una matriz $A$ de $n \times n$ se calcula mediante la expansión por cofactores a lo largo de cualquier fila $i$ o columna $j$:
 
 $$ \det(A) = \sum_{k=1}^n a_{ik} C_{ik} = a_{i1}C_{i1} + a_{i2}C_{i2} + \dots + a_{in}C_{in} $$
 :::
 
 ::: {#thm-det-triangulares}
-### Determinante de matrices triangulares
+
+### Teorema: Determinante de matrices triangulares
 Si $A$ es una matriz triangular superior, inferior o diagonal, su determinante es el producto de las entradas de su diagonal principal:
 
 $$ \det(A) = a_{11} \cdot a_{22} \dots a_{nn} $$
 :::
 
 ::: {#exm-cofactores-3x3}
-### Cálculo por cofactores en $3 \times 3$
+
+### Ejemplo: Cálculo por cofactores en $3 \times 3$
 Calcule el determinante de $A = \begin{pmatrix} 2 & 3 & 1 \\ 4 & 1 & -2 \\ 0 & 5 & 3 \end{pmatrix}$ expandiendo por la primera fila.
 
 *Solución:* Usamos la fórmula $\det(A) = a_{11}C_{11} + a_{12}C_{12} + a_{13}C_{13}$.
@@ -87,49 +103,119 @@ Calcule el determinante de $A = \begin{pmatrix} 2 & 3 & 1 \\ 4 & 1 & -2 \\ 0 & 5
 $$ \det(A) = 2 \begin{vmatrix} 1 & -2 \\ 5 & 3 \end{vmatrix} - 3 \begin{vmatrix} 4 & -2 \\ 0 & 3 \end{vmatrix} + 1 \begin{vmatrix} 4 & 1 \\ 0 & 5 \end{vmatrix} $$
 $$ \det(A) = 2(3 - (-10)) - 3(12 - 0) + 1(20 - 0) = 2(13) - 3(12) + 20 = 26 - 36 + 20 = 10 $$
 :::
-**NOTA: ** Observe que se puede resolver por cualquier fila o columna, por favor resuelva el determinante por todas las filas y por todas las columnas, obviamente el resultado debe ser el mismo, además observe que cada vez que la suma $1+j$ es par, el signo que lleva el cofactor, es positivo, mientras que si $i+j$ es impar, irá precedido de un signo negativo.
 
-## Sección de análisis y Ventana IA
+> **NOTA PARA EL ESTUDIANTE:** Observe que se puede resolver por cualquier fila o columna (¡intente resolverlo por la tercera fila, que tiene un cero, para que vea que se facilita el cálculo!). El resultado debe ser el mismo. Además, observe que cada vez que la suma $i+j$ es par, el signo que lleva el cofactor es positivo, mientras que si $i+j$ es impar, irá precedido de un signo negativo.
 
-Geométricamente, las columnas de una matriz $2 \times 2$ definen dos vectores. El valor absoluto del determinante es el **área del paralelogramo** que forman. En $3 \times 3$, es el **volumen del paralelepípedo**. 
+## . Propiedades fundamentales y teoremas
 
-Si el determinante es $0$, el área (o volumen) es cero: ¡la matriz aplastó el espacio sobre una línea o un punto! Por eso no tiene inversa: no se puede "des-aplastar" una dimensión perdida.
+Calcular determinantes mediante la definición inductiva (cofactores) es teóricamente directo pero computacionalmente imposible para matrices grandes. Como bien señala Grossman, una matriz de $50 \times 50$ requeriría calcular $50! \approx 3 \times 10^{64}$ determinantes de $2 \times 2$; ¡una computadora tardaría más que la edad del universo!
 
-::: {.callout-important title="Ventana IA: El Jacobiano y el colapso de la información"}
-En las redes neuronales profundas, cada capa aplica una transformación lineal $W\mathbf{x}$. Si en alguna capa la matriz de pesos $W$ tiene un determinante cercano a cero, la transformación está "aplastando" el espacio de características (features). 
-
-En IA generativa y modelos de flujo (Normalizing Flows), se usa el **determinante Jacobiano** para medir cómo cambia el volumen de probabilidad al transformar los datos. Calcular el determinante de matrices gigantes es costoso, por lo que las arquitecturas modernas diseñan matrices donde el determinante es trivial de calcular (matrices triangulares o de bajo rango). 
-
-**Regla de oro en IA:** $|\det(W)| < 1$ comprime información; $|\det(W)| > 1$ la expande. Un $\det \approx 0$ provoca el temido problema de "gradientes desvanecientes" (vanishing gradients).
-:::
-
-```{python}
-#| echo: false
-import numpy as np
-A = np.array([[2, 3, 1], [4, 1, -2], [0, 5, 3]])
-print("Verificación en Python:", np.linalg.det(A))
-```
-
-## Ejercicios demostrativos
+Por ello, usamos **propiedades** para simplificar los cálculos, a menudo llevando la matriz a una forma triangular mediante operaciones elementales.
 
 ::: {#thm-propiedades-fundamentales}
 ### Propiedades fundamentales
-Para cualesquiera matrices $A, B$ de $n \times n$:
-1. $\det(AB) = \det(A)\det(B)$
-2. $\det(A^T) = \det(A)$
-3. Si $A$ tiene una fila (o columna) de ceros, o dos filas idénticas, $\det(A) = 0$.
+
+Para cualesquiera matrices $A, B$ de $n \times n$ y un escalar $c$:
+
+1. **Multiplicatividad:** $\det(AB) = \det(A)\det(B)$
+
+2. **Transposición:** $\det(A^T) = \det(A)$
+
+3. **Intercambio de filas/columnas:** Si se intercambian dos filas (o dos columnas) de $A$, el determinante cambia de signo.
+
+4. **Filas/Columnas nulas o idénticas:** Si $A$ tiene una fila (o columna) de ceros, o dos filas (o columnas) idénticas, $\det(A) = 0$.
+
+5. **Operaciones elementales:** Sumar un múltiplo de una fila a otra *no cambia* el determinante. Multiplicar una fila por $c$ multiplica el determinante por $c$.
 :::
 
 ::: {.proof}
-*Demostración del inciso 3 (Filas idénticas):*
-Supongamos que la matriz $A$ tiene las filas $i$ y $j$ idénticas. Si intercambiamos la fila $i$ con la fila $j$, la matriz no cambia (es la misma $A$). Por la propiedad de intercambio (que invierte el signo del determinante), tenemos:
+*Propiedad 4 (Filas idénticas):*
 
+Denotemos el determinante como una función de sus filas: $\det(R_1, \dots, R_i, \dots, R_j, \dots, R_n)$. Supongamos que la matriz $A$ tiene las filas $i$ y $j$ idénticas. Si intercambiamos la fila $i$ con la fila $j$, la matriz no cambia (es la misma $A$). Por la propiedad del intercambio de filas, el determinante cambia de signo:
 $$ \det(A) = -\det(A) $$
-
 Sumando $\det(A)$ a ambos lados:
-
 $$ 2\det(A) = 0 \implies \det(A) = 0 $$
+El caso de columnas se deduce de la propiedad de la transpuesta. $\blacksquare$
+:::
+
+::: {.proof}
+*Propiedad 4 (Fila nula):*
+Sea $A$ una matriz de $n \times n$ que tiene la fila $i$ compuesta enteramente por ceros. Si calculamos el determinante de $A$ mediante la expansión por cofactores a lo largo de esa fila $i$, obtenemos:
+
+$$ \det(A) = \sum_{j=1}^n a_{ij} C_{ij} $$
+
+Dado que todos los elementos de la fila $i$ son cero ($a_{ij} = 0$ para todo $j$), la suma se anula:
+
+$$ \det(A) = \sum_{j=1}^n 0 \cdot C_{ij} = 0 $$
+
+Por la propiedad de la transpuesta, si una columna es nula, se puede expandir por esa columna y el resultado es el mismo. $\blacksquare$
+:::
+
+::: {.proof}
+*Propiedad 5 (Suma de múltiplos):*
+
+Queremos probar que sumar $c$ veces la fila $j$ a la fila $i$ no altera el determinante. Usando la multilinealidad en la fila $i$:
+$$ \det(\dots, R_i + c R_j, \dots, R_j, \dots) = \det(\dots, R_i, \dots, R_j, \dots) + c \det(\dots, R_j, \dots, R_j, \dots) $$
+El primer término es el determinante original. El segundo término tiene dos filas idénticas ($R_j$ en la posición $i$ y en la posición $j$), por lo que su determinante es $0$. Por lo tanto:
+$$ \det(\text{matriz original}) + c \cdot 0 = \det(\text{matriz original}) $$
 $\blacksquare$
+:::
+
+::: {.proof}
+*Propiedad 2 (Transposición):*
+
+Se demuestra por inducción matemática sobre el tamaño $n$ de la matriz.
+
+* **Caso base ($n=1$):** Trivial, $\det([a]) = a = \det([a]^T)$.
+
+* **Hipótesis de inducción:** Supongamos que $\det(M^T) = \det(M)$ para toda matriz de tamaño $(n-1) \times (n-1)$.
+
+* **Paso inductivo ($n \times n$):** Sea $A$ de tamaño $n \times n$. Expandimos $\det(A)$ por la primera fila:
+$$ \det(A) = \sum_{j=1}^n a_{1j} (-1)^{1+j} \det(M_{1j}) $$
+
+Donde $M_{1j}$ es el menor asociado. Ahora expandimos $\det(A^T)$ por la primera columna (que es la primera fila de $A$):
+$$ \det(A^T) = \sum_{j=1}^n a_{j1} (-1)^{j+1} \det(N_{j1}) $$
+
+Donde $N_{j1}$ es el menor de $A^T$ al eliminar la fila $j$ y columna 1. Observemos que $N_{j1} = (M_{1j})^T$. Por la hipótesis de inducción, $\det(N_{j1}) = \det(M_{1j})$. Reordenando los términos de la suma (que es conmutativa), se concluye que $\det(A^T) = \det(A)$. $\blacksquare$
+:::
+
+::: {.proof}
+*Propiedad 3 (Intercambio de filas):*
+
+Sea $A$ una matriz y sea $A^T$ la matriz con las filas $i$ y $j$ intercambiadas. Consideremos una matriz auxiliar $B$ donde tanto la fila $i$ como la fila $j$ se reemplazan por la suma $R_i + R_j$. Como $B$ tiene dos filas idénticas, $\det(B) = 0$.
+Por la multilinealidad de la fila $i$ y la fila $j$:
+$$ 0 = \det(\dots, R_i + R_j, \dots, R_i + R_j, \dots) $$
+$$ = \det(\dots, R_i, \dots, R_i, \dots) + \det(\dots, R_i, \dots, R_j, \dots) + \det(\dots, R_j, \dots, R_i, \dots) + \det(\dots, R_j, \dots, R_j, \dots) $$
+Los términos primero y cuarto son cero por tener filas idénticas. Por lo tanto:
+$$ 0 = \det(A) + \det(A') \implies \det(A') = -\det(A) $$
+El caso para columnas se deduce inmediatamente usando la Propiedad 2. $\blacksquare$
+:::
+
+::: {.proof}
+*Demostración de la Propiedad 1 (Multiplicatividad):*
+
+La demostración formal completa es extensa, pero sigue esta estructura lógica:
+
+1. Se demuestra que si $E$ es una matriz elemental, $\det(EB) = \det(E)\det(B)$. Esto se verifica analizando los tres tipos de operaciones elementales usando las Propiedades 3 y 5.
+
+2. Si $A$ es invertible, se descompone en producto de matrices elementales: $A = E_1 E_2 \dots E_k$. Aplicando el paso 1 repetidamente:
+   $$ \det(AB) = \det(E_1 \dots E_k B) = \det(E_1)\det(E_2) \dots \det(E_k)\det(B) = \det(A)\det(B) $$
+
+3. Si $A$ no es invertible, $\det(A) = 0$. En este caso, $AB$ tampoco es invertible (su rango es menor o igual al de $A$), por lo que $\det(AB) = 0$. Se cumple que $0 = 0 \cdot \det(B)$. $\blacksquare$
+:::
+## Reto: Ejercicios de demostración
+
+Ahora es tu turno de demostrar propiedades usando las herramientas anteriores. Estos ejercicios te ayudarán a pensar como un matemático.
+
+::: {.callout-exercise title="Reto 1: El determinante de la inversa"}
+**Enunciado:** Utilizando la propiedad multiplicativa $\det(AB) = \det(A)\det(B)$ y la definición de matriz inversa ($A A^{-1} = I$), demuestre que si $A$ es invertible, entonces:
+$$ \det(A^{-1}) = \frac{1}{\det(A)} $$
+
+*Pista:* ¿Cuánto vale el determinante de la matriz identidad $I$? (Recuerde que $I$ es una matriz triangular con unos en la diagonal).
+:::
+
+::: {.callout-exercise title="Reto 2: Matrices ortogonales en robótica"}
+**Enunciado:** Una matriz $R$ se llama ortogonal si $R^T R = I$. Usando las propiedades $\det(AB)=\det(A)\det(B)$ y $\det(A^T)=\det(A)$, demuestre que para cualquier matriz ortogonal, $\det(R)$ solo puede valer $1$ o $-1$.
 :::
 
 ## Aplicaciones por carrera
@@ -138,19 +224,35 @@ $\blacksquare$
 Un ingeniero agrónomo mapea un lote de terreno usando un dron. Las coordenadas de las esquinas de una sección triangular, medidas desde un origen, están dadas por los vectores de posición $\mathbf{u} = (150, 200)$ m y $\mathbf{v} = (300, 50)$ m. El área del triángulo formado por el origen y estos puntos es la mitad del área del paralelogramo que definen.
 
 Calculamos el determinante de la matriz formada por estos vectores:
-
 $$ A = \begin{pmatrix} 150 & 300 \\ 200 & 50 \end{pmatrix} \implies \det(A) = (150)(50) - (300)(200) = 7500 - 60000 = -52500 $$
-
 El área del paralelogramo es $|\det(A)| = 52500$ m$^2$. El área del lote triangular es la mitad: **$26250$ m$^2$** (aprox. 2.6 hectáreas). El signo negativo solo indica la orientación (horaria) del trazado.
 :::
 
 ::: {.callout-note title="Aplicación · Mecatrónica: Volumen del espacio de trabajo de un robot"}
-Un brazo robótico en 3D puede alcanzar un punto final. La matriz de transformación de sus articulaciones tiene una submatriz de rotación $R$ de $3 \times 3$. Si el volumen de trabajo permitido es una caja unitaria de $1$ m$^3$, el volumen real alcanzable tras la transformación es exactamente $|\det(R)|$. Como las matrices de rotación pura son ortogonales, $\det(R) = 1$, lo que confirma que **el robot rota el espacio pero no lo comprime ni lo expande**.
+Un brazo robótico en 3D puede alcanzar un punto final. La matriz de transformación de sus articulaciones tiene una submatriz de rotación $R$ de $3 \times 3$. Si el volumen de trabajo permitido es una caja unitaria de $1$ m$^3$, el volumen real alcanzable tras la transformación es exactamente $|\det(R)|$. Como las matrices de rotación pura son ortogonales (¡como demostraste en el Reto 2!), $\det(R) = \pm 1$, lo que confirma que **el robot rota el espacio pero no lo comprime ni lo expande**.
+:::
+
+## Ventana IA: El Jacobiano y el colapso de la información
+
+::: {.callout-important title="Inteligencia Artificial: Flujos Normalizados y Gradientes"}
+En las redes neuronales profundas, cada capa aplica una transformación lineal (o no lineal local) $W\mathbf{x}$. Si en alguna capa la matriz de pesos $W$ tiene un determinante cercano a cero, la transformación está "aplastando" el espacio de características (*features*).
+
+En IA generativa, específicamente en modelos de flujo (*Normalizing Flows*), se usa el **determinante Jacobiano** para medir cómo cambia el volumen de probabilidad al transformar los datos de un espacio latente a un espacio de datos complejos. Calcular el determinante de matrices gigantes es costoso ($O(n^3)$), por lo que las arquitecturas modernas diseñan matrices donde el determinante es trivial de calcular (matrices triangulares o de bajo rango).
+
+**Regla de oro en IA:**
+- $|\det(W)| < 1$ comprime información.
+- $|\det(W)| > 1$ la expande.
+- Un $\det \approx 0$ provoca el temido problema de "gradientes desvanecientes" (*vanishing gradients*), haciendo que la red deje de aprender.
 :::
 
 ## Módulo Python y visualización
 
+Vamos a comprobar geométricamente que el determinante es el factor de escala del área.
+
 ```{python}
+#| echo: true
+#| label: fig-paralelogramo
+#| fig-cap: "Interpretación geométrica del determinante en 2D. El área del paralelogramo formado por los vectores columna es exactamente |det(A)|."
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -179,3 +281,308 @@ ax.set_title(f"Área del paralelogramo = |det(A)| = {abs(det_A):.2f}")
 plt.legend()
 plt.show()
 ```
+
+
+## Interpretación geométrica del determinante de $2 \times 2$
+
+Si graficamos en el plano los puntos $(a, c)$ y $(b, d)$, y trazamos los segmentos desde el origen $(0,0)$ hasta estos puntos (asumiendo que no son colineales), podemos formar un paralelogramo. Este paralelogramo tiene como vértices al origen $O(0,0)$, los puntos correspondientes a las columnas de la matriz $A(a,c)$ y $B(b,d)$, y el punto suma $C(a+b, c+d)$.
+
+A esta región se le llama el **área generada por $A$**. Resulta que el valor absoluto del determinante de $A$ corresponde exactamente al área de este paralelogramo:
+
+$$ \text{Área} = |\det(A)| = |ad - bc| $$
+
+Para demostrar de forma puramente geométrica que el área del paralelogramo $OACB$ es $\vert{}ad - bc\vert{}$, se inscribe la figura dentro de un **rectángulo envolvente** alineado con los ejes cartesianos y se resta el área de los 4 triángulos rectángulos que se forman en las esquinas exteriormente.
+
+```{python}
+#| fig-cap: "Área del paralelogramo = |det(A)|"
+#| label: fig-paralelogramo-det
+#| fig-align: center
+#| echo: false
+
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.patches import Polygon, Arc
+
+a, b, c, d = 3, 1, 1, 2
+OP, OQ = np.array([a, c]), np.array([b, d])
+OR = OP + OQ
+det = a * d - b * c
+
+fig, ax = plt.subplots(figsize=(8, 6))
+verts = np.array([[0, 0], OP, OR, OQ])
+ax.add_patch(Polygon(verts, closed=True, facecolor='#E8F4FD', edgecolor='#2E86AB', lw=2))
+
+ax.annotate('', xy=OP, xytext=(0,0), arrowprops=dict(arrowstyle='->', color='#D62828', lw=2))
+ax.annotate('', xy=OQ, xytext=(0,0), arrowprops=dict(arrowstyle='->', color='#F77F00', lw=2))
+
+# Altura perpendicular (QH) y punto H (pie de la perpendicular)
+t = np.dot(OQ, OP) / np.dot(OP, OP)
+H = t * OP
+ax.plot([OQ[0], H[0]], [OQ[1], H[1]], 'k--', lw=1.5)
+ax.scatter(H[0], H[1], color='black', s=25, zorder=5)
+ax.text(H[0] + 0.1, H[1] - 0.25, '$H$', color='black', fontsize=12, fontweight='bold')
+ax.text(H[0] - 0.2, H[1] + 0.8, '$h$', color='black', fontsize=12, fontweight='bold')
+
+# Segmento vertical (QS) y punto S (intersección vertical)
+y_S = (c / a) * b
+S = np.array([b, y_S])
+ax.plot([OQ[0], S[0]], [OQ[1], S[1]], color='#8A2BE2', linestyle=':', lw=1.8)
+ax.scatter(S[0], S[1], color='#8A2BE2', s=35, zorder=5)
+ax.text(S[0] - 0.2, S[1] - 0.3, '$S$', color='#8A2BE2', fontsize=12, fontweight='bold')
+
+# Línea punteada en el eje x desde (0,0) hasta (a,0)
+ax.plot([0, a], [0, 0], color='#888888', linestyle='--', lw=1.2)
+# Línea punteada vertical desde (a,0) hasta P(a,c)
+ax.plot([a, a], [0, c], color='#888888', linestyle='--', lw=1.2)
+
+# --- ÁNGULO THETA EN EL ORIGEN (AGREGADO) ---
+theta_deg = np.degrees(np.arctan2(c, a))
+arc_theta = Arc((0, 0), width=1.2, height=1.2, angle=0, theta1=0, theta2=theta_deg, color='#27AE60', lw=1.5)
+ax.add_patch(arc_theta)
+ax.text(0.65, 0.02, r'$\theta$', color='#27AE60', fontsize=12, fontweight='bold')
+
+# --- ÁNGULO THETA EN EL VÉRTICE Q (TRIÁNGULO QHS) ---
+arc_theta_Q = Arc((OQ[0], OQ[1]), width=1.0, height=1.0, angle=0, theta1=270, theta2=270 + theta_deg, color='#27AE60', lw=1.5)
+ax.add_patch(arc_theta_Q)
+ax.text(OQ[0] + 0.1, OQ[1] - 0.8, r'$\theta$', color='#27AE60', fontsize=12, fontweight='bold')
+
+# Etiquetas
+ax.text(-0.3, -0.3, '$O$', fontsize=12)
+ax.text(OP[0] + 0.1, OP[1] - 0.2, '$P=(a,c)$', color='#D62828')
+ax.text(OQ[0] - 0.6, OQ[1] + 0.1, '$Q=(b,d)$', color='#F77F00')
+ax.text(OR[0] + 0.1, OR[1], '$R$', color='#2E86AB')
+
+# Título corregido con raw f-string
+ax.set_title(fr'$|\det(A)| = |ad - bc| $', fontsize=14)
+
+# Ajuste de límites del lienzo y cuadrícula
+ax.set_xlim(-0.8, OR[0] + 0.8)
+ax.set_ylim(-0.8, OR[1] + 0.8)
+ax.set_aspect('equal')
+ax.grid(True, alpha=0.3)
+
+plt.show()
+```
+---
+
+**Demostración geométrica (base × altura)**
+
+Sea el paralelogramo de vértices $O(0,0)$, $P(a,c)$, $R(a+b,c+d)$ y $Q(b,d)$.
+
+**1. Longitud de la base**
+
+Tomamos como base el lado $OP$. Su longitud es la distancia del origen al punto $P(a,c)$:
+
+
+$$\text{base} = \vert{}OP\vert{} = \sqrt{a^2+c^2}$$
+
+**2. Ecuación de la recta base**
+
+La recta que pasa por el origen $O(0,0)$ y el punto $P(a,c)$ tiene pendiente $m = \frac{c}{a}$, por lo que su ecuación implícita es:
+
+
+$$y = \frac{c}{a}x \implies cx - ay = 0$$
+
+**3. Segmento vertical a la recta base**
+
+Desde el vértice $Q(b,d)$ se traza una recta vertical hacia abajo hasta cortar la recta $OP$ en el punto $S$. Dado que comparte la coordenada $x = b$, la ordenada de $S$ se obtiene evaluando $x$ en la recta base:
+
+
+$$y_S = \frac{c}{a}b$$
+
+La longitud del segmento vertical $QS$ es la diferencia entre las alturas de $Q$ y $S$:
+
+
+$$\vert{}QS\vert{} = \left\vert{}d - \frac{c}{a}b\right\vert{} = \frac{\vert{}ad - bc\vert{}}{a}$$
+
+**4. Cálculo de la altura mediante triángulos semejantes**
+
+Sea $H$ la proyección ortogonal de $Q$ sobre la recta $OP$, de modo que el segmento $QH$ representa la altura perpendicular $h$. En el triángulo rectángulo $\triangle QHS$, el segmento vertical $\vert{}QS\vert{}$ actúa como la hipotenusa.
+
+La recta base $OP$ forma un triángulo rectángulo de catetos $a$ (horizontal) y $c$ (vertical) con hipotenusa $\sqrt{a^2+c^2}$, por lo que el coseno de su ángulo de inclinación $\theta$ es:
+
+
+$$\cos(\theta) = \frac{a}{\sqrt{a^2+c^2}}$$
+
+Por geometría de ángulos entre perpendiculares, la altura $h = \vert{}QH\vert{}$ equivale a proyectar la hipotenusa vertical $\vert{}QS\vert{}$ mediante $\cos(\theta)$:
+
+
+$$\text{h} = \text{altura} = \vert{}QS\vert{} \cdot \cos(\theta) = \left(\frac{\vert{}ad - bc\vert{}}{a}\right) \cdot \left(\frac{a}{\sqrt{a^2+c^2}}\right) = \frac{\vert{}ad - bc\vert{}}{\sqrt{a^2+c^2}}$$
+
+**5. Área total del paralelogramo**
+
+Multiplicando la base por la altura calculada:
+
+$$
+\begin{aligned}
+\text{Área} &= \text{base} \times \text{altura} \\
+            &= \sqrt{a^2+c^2} \cdot \frac{|ad - bc|}{\sqrt{a^2+c^2}} = |ad - bc| = |\det(A)|
+\end{aligned}
+$$
+---
+
+## Síntesis: El factor de escala del espacio
+
+El estudio del determinante conecta el álgebra lineal con la geometría al definir el factor por el cual una transformación lineal escala las áreas o volúmenes en el espacio.
+
+::: {.callout-tip title="Visión Geométrica y Propiedades Clave"}
+| Concepto | Fórmula / Propiedad | Significado Geométrico o Computacional |
+| :--- | :--- | :--- |
+| **Factor de Escala** | $|\det(A)|$ | Proporción en la que se amplifica o comprime el área (2D) o volumen (3D). |
+| **Singularidad** | $\det(A) = 0$ | Colapso de dimensión; el espacio se aplasta a una línea/punto y pierde su inversa. |
+| **Orientación** | $\det(A) < 0$ | Invierte la orientación del espacio (efecto espejo). |
+| **Multiplicatividad** | $\det(AB) = \det(A)\det(B)$ | El efecto del escalado se multiplica al componer transformaciones. |
+| **Transposición** | $\det(A^T) = \det(A)$ | El determinante se comporta de forma idéntica por filas o por columnas. |
+| **Matrices Triangulares** | $\det(A) = \prod_{i=1}^n a_{ii}$ | Se reduce al producto directo de los elementos de la diagonal principal. |
+:::
+
+### Metodología de cálculo y demostración
+
+* **Cálculo inductivo (Cofactores):** Generaliza la fórmula $ad - bc$ a dimensiones superiores usando la relación $C_{ij} = (-1)^{i+j}M_{ij}$. Aunque riguroso, su costo computacional de $O(n!)$ requiere usar reducción gaussiana para llevar la matriz a forma triangular en problemas grandes ($O(n^3)$).
+
+* **Construcción geométrica en 2D:** La deducción por base $\times$ altura demuestra que la longitud de la base $\|OP\| = \sqrt{a^2+c^2}$ proyectada con la altura $h = |QS|\cos(\theta)$ cancela el radical de la distancia, resultando en el área exacta del paralelogramo: $|ad - bc|$.
+
+### Aplicaciones del factor de escala
+
+* **Geometría y Robótica:** Permite calcular áreas de polígonos irregulares mediante vectores en agronomía y garantiza que las transformaciones de rotación en mecatrónica (matrices ortogonales con $\det(R) = \pm 1$) mantengan rígido el espacio de trabajo del robot.
+
+* **Inteligencia Artificial:** En flujos normalizados (*Normalizing Flows*), el determinante del Jacobiano mide la transformación de probabilidad entre capas. Un $\det(W) \approx 0$ colapsa la representación y provoca el desvanecimiento de gradientes (*vanishing gradients*) en el entrenamiento.
+
+
+## Ejercicios propuestos
+
+Para resolver con lápiz, papel y Python cuando se indique. Los ejercicios se clasifican por nivel de dificultad y enfoque.
+
+### Nivel 1: Mecanización (Cálculo Directo)
+
+::: {#exr-mecanizacion-1}
+#### Ejercicio 1.1: Expansión por cofactores
+
+Dada la matriz $A = \begin{pmatrix} 1 & 3 & 0 \\ -2 & 1 & 4 \\ 0 & 5 & 2 \end{pmatrix}$:
+
+a) Calcule $\det(A)$ expandiendo por la fila o columna que minimice las operaciones.
+b) Indique si la matriz $A$ es invertible a partir del resultado obtenido.
+:::
+
+::: {#exr-mecanizacion-2}
+#### Ejercicio 1.2: Álgebra de determinantes
+
+Sea $B$ una matriz cuadrada de orden $3 \times 3$ tal que $\det(B) = -5$. Calcule el valor numérico de:
+
+a) $\det(2B)$
+b) $\det(B^{-1})$
+c) $\det(B^T B)$
+:::
+
+::: {#exr-mecanizacion-3}
+#### Ejercicio 1.3: Atajo en matrices triangulares
+
+Utilice las propiedades de los determinantes (sin expandir por cofactores) para calcular el determinante de la matriz triangular superior:
+$$ C = \begin{pmatrix} 2 & 5 & -1 & 7 \\ 0 & 3 & 8 & 4 \\ 0 & 0 & -4 & 9 \\ 0 & 0 & 0 & 5 \end{pmatrix} $$
+:::
+
+---
+
+### Nivel 2: Análisis y Razonamiento Conceptual
+
+::: {#exr-analisis-1}
+#### Ejercicio 2.1: Colapso de volumen y filas dependientes
+
+Suponga que una matriz $C \in \mathcal{M}_{3 \times 3}$ tiene la particularidad de que su tercera fila es el resultado de sumar el doble de la primera fila menos la segunda fila. Es decir, $F_3 = 2F_1 - F_2$.
+
+a) Justifique geométricamente por qué el factor de escala (volumen) asociado a esta matriz es igual a cero.
+b) Confirme su respuesta aplicando las propiedades algebraicas de los determinantes.
+:::
+
+::: {#exr-analisis-2}
+#### Ejercicio 2.2: Determinante por bloques
+
+Considere la matriz en bloques $M = \begin{pmatrix} A & 0 \\ C & B \end{pmatrix}$, donde $A$ es de $2 \times 2$, $B$ es de $2 \times 2$, $C$ es de $2 \times 2$ y $0$ es la matriz nula de $2 \times 2$.
+
+Argumente por qué $\det(M) = \det(A) \cdot \det(B)$.
+*(Sugerencia: Piense en llevar la matriz a una forma triangular superior utilizando operaciones elementales).*
+:::
+
+::: {#exr-analisis-3}
+#### Ejercicio 2.3: Análisis de afirmaciones
+
+Determine si las siguientes afirmaciones son verdaderas o falsas. Justifique su respuesta algebraicamente.
+
+a) Si $\det(A) = 2$ y $\det(B) = 3$, entonces $\det(A+B) = 5$.
+
+b) Si una matriz $A$ de $3 \times 3$ cumple que $A^2 = A$, entonces su determinante solo puede ser $0$ o $1$.
+:::
+
+---
+
+### Nivel 3: Demostraciones Teóricas
+
+::: {#exr-demostracion-1}
+#### Ejercicio 3.1: Matrices antisimétricas
+
+Una matriz cuadrada $A$ es antisimétrica si $A^T = -A$. Demuestre que si $A$ es una matriz antisimétrica de tamaño $n \times n$ con $n$ impar, entonces $\det(A) = 0$.
+
+*Pista:* Aplique las propiedades de transposición $\det(A^T) = \det(A)$ y de multiplicación por un escalar $\det(cA) = c^n \det(A)$.
+:::
+
+::: {#exr-demostracion-2}
+#### Ejercicio 3.2: Matrices idempotentes (Proyecciones)
+
+Una matriz $P$ se llama idempotente si cumple que $P^2 = P$ (las matrices de proyección geométrica en subespacios son de este tipo). Demuestre que el determinante de cualquier matriz idempotente solo puede tomar dos valores posibles: $0$ o $1$.
+:::
+
+::: {#exr-demostracion-3}
+#### Ejercicio 3.3: Potencia de matrices
+
+Utilice la propiedad multiplicativa de los determinantes y el principio de inducción matemática para demostrar que para cualquier entero positivo $k$:
+$$ \det(A^k) = (\det(A))^k $$
+:::
+
+---
+
+### Nivel 4: Aplicaciones Prácticas
+
+::: {.callout-note title="Aplicación 1 · Agronomía y Ambiental: Delimitación de cuencas y lotes"}
+#### Ejercicio 4.1
+
+Un equipo de monitoreo ambiental delimita una parcela poligonal para evaluar la erosión en una ladera. Utilizando coordenadas locales en metros, las esquinas de una zona triangular de muestreo son $O(0,0)$, $P(120, 45)$ y $Q(35, 110)$.
+
+a) Construya la matriz $A$ de $2 \times 2$ cuyas filas (o columnas) correspondan a las coordenadas de $P$ y $Q$.
+b) Calcule el área total de la zona de muestreo utilizando el valor absoluto del determinante de $A$.
+c) Si un modelo de elevación digital aplica una transformación de deformación por pendiente dada por la matriz $T = \begin{pmatrix} 1.2 & 0.1 \\ 0.0 & 1.5 \end{pmatrix}$, calcule el área transformada de la parcela multiplicando el área original por el factor de escala $|\det(T)|$.
+:::
+
+::: {.callout-note title="Aplicación 2 · Ambiental: Volumen de una pluma de contaminante"}
+#### Ejercicio 4.2
+
+Un derrame químico en un acuífero genera una pluma de contaminación cuyo volumen aproximado se modela geométricamente como un paralelepípedo. Las dimensiones de las aristas de este volumen desde el punto de fuga están representadas en las filas de la matriz $V$ (en metros):
+
+$$ V = \begin{pmatrix} 50 & 10 & 0 \\ 20 & 60 & 5 \\ 0 & 10 & 30 \end{pmatrix} $$
+
+a) Calcule el volumen de la pluma contaminante utilizando el determinante de $V$.
+b) Si se inyecta un reactivo que reduce las dimensiones de las aristas a la mitad (es decir, la matriz se convierte en $\frac{1}{2}V$), ¿en qué factor se reduce el volumen total de la pluma? Justifique usando propiedades de determinantes.
+:::
+
+::: {.callout-note title="Aplicación 3 · Mecatrónica: Singularidad y cinemática de un robot"}
+#### Ejercicio 4.3
+
+La transformación de posición y orientación en el espacio 3D del extremo de un brazo robótico respecto a su base está gobernada por la matriz de rotación $R$:
+
+$$R = \begin{pmatrix} \cos\theta & -\sin\theta & 0 \\ \sin\theta & \cos\theta & 0 \\ 0 & 0 & 1 \end{pmatrix}$$
+
+a) Demuestre analíticamente que $\det(R) = 1$ para cualquier ángulo $\theta$.
+b) Interprete el significado físico de este resultado en términos de la conservación del volumen de una herramienta transportada por el robot.
+c) ¿Qué ocurriría con el volumen de la herramienta si la matriz del controlador se corrompiera y pasara a ser una matriz $3 \times 3$ cuyo determinante es $0$? ¿Cómo se llama esta condición en robótica?
+:::
+
+::: {.callout-note title="Aplicación 4 · Inteligencia Artificial: Desvanecimiento de gradiente"}
+#### Ejercicio 4.4
+
+En una arquitectura de red neuronal profunda para el análisis de imágenes multiespectrales, la salida de un bloque de capas consecutivas viene dada por la transformación lineal acumulada $W_{total} = W_3 W_2 W_1$. Las matrices de pesos de las tres capas cuadradas de $3 \times 3$ tienen los siguientes determinantes:
+
+$$\det(W_1) = 0.4 \quad , \quad \det(W_2) = 0.1 \quad , \quad \det(W_3) = 0.05$$
+
+a) Calcule el determinante de la transformación acumulada $\det(W_{total})$.
+b) Determine el porcentaje del volumen del espacio de características (*features*) que retiene esta red respecto al espacio de entrada original.
+c) Argumente si esta arquitectura sufrirá el problema de **desvanecimiento de gradiente** (*vanishing gradient*) durante el entrenamiento por retropropagación.
+:::

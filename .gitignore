@@ -4,3 +4,6 @@ _book/
 *.tex
 *.md
 *_files/
+
+/.quarto/
+**/*.quarto_ipynb

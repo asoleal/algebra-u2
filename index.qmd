@@ -1,1 +1,83 @@
-Un breve saludo
+---
+title: "Álgebra Lineal"
+subtitle: "Teoría, Geometría, Código e Inteligencia Artificial"
+author: "Profesor John Leal"
+date: today
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 2
+    code-tools: true
+    number-sections: false
+page-layout: article
+---
+
+# ¡Bienvenido al curso interactivo de Álgebra Lineal!
+
+Este no es un libro de texto tradicional. Este espacio ha sido diseñado para romper la barrera entre las matemáticas abstractas y el mundo real. Aquí no solo aprenderás a calcular; aprenderás a **visualizar, programar y aplicar**.
+
+El Álgebra Lineal es el lenguaje moderno de la ciencia de datos, la física computacional, la robótica y, por supuesto, la Inteligencia Artificial. El objetivo de este curso es que domines este lenguaje desde tres perspectivas complementarias:
+
+1. **La Intuición Geométrica:** Entender qué significan las operaciones en el espacio (¿qué hace realmente una matriz con los vectores?).
+2. **El Rigor Matemático:** Definiciones formales, teoremas y demostraciones que estructuran el pensamiento lógico.
+3. **La Implementación Computacional:** Traducir la teoría a código Python y entender cómo se usa en los algoritmos de IA modernos.
+
+## ¿Cómo está estructurado cada capítulo?
+
+Para aprovechar al máximo el material, cada tema sigue una pedagogía activa:
+
+::: {.callout-note appearance="minimal"}
+### 🧠 Contexto y Teoría
+Empezamos con el "por qué" y el "qué". Verás la definición formal, pero siempre anclada a una interpretación geométrica clara.
+:::
+
+::: {.callout-caution appearance="minimal"}
+### 📐 Teoremas y Demostraciones
+No basta con saber usar una fórmula. Incluiremos demostraciones paso a paso y **retos demostrativos** donde tú deberás completar la lógica matemática.
+:::
+
+::: {.callout-important appearance="minimal"}
+### 🤖 Ventana IA y Aplicaciones
+Conectaremos cada concepto con su uso en la industria. Desde el cálculo de áreas en agronomía hasta el **Jacobiano en Redes Neuronales** y modelos generativos.
+:::
+
+::: {.callout-tip appearance="minimal"}
+### 🐍 Laboratorio Python
+Cada sección incluye código ejecutable en Python (NumPy/Matplotlib) para que compruebes visual y numéricamente los teoremas.
+:::
+
+---
+
+## Temario del Curso
+
+A continuación, los módulos que conforman nuestra travesía:
+
+### [Capítulo 1: Sistemas de Ecuaciones y Matrices](#)
+*Fundamentos, operaciones elementales, factorización LU y el espacio de soluciones.*
+
+### [Capítulo 2: Espacios Vectoriales](#)
+*Independencia lineal, bases, dimensión y productos internos. El escenario donde viven los datos.*
+
+### [Capítulo 3: Determinantes](determinantes.qmd)
+*El factor de escala del espacio. Menores, cofactores, interpretación geométrica (área/volumen), la regla de Cramer y su papel crítico en los Flujos Normalizados de IA.*
+
+### [Capítulo 4: Valores y Vectores Propios (Eigen-pairs)](#)
+*Diagonalización, formas cuadráticas y el Análisis de Componentes Principales (PCA) en Machine Learning.*
+
+### [Capítulo 5: Descomposición en Valores Singulares (SVD)](#)
+*La joya del Álgebra Lineal. Compresión de imágenes, sistemas de recomendación y reducción de dimensionalidad.*
+
+---
+
+## Herramientas y Prerrequisitos
+
+- **Prerrequisitos:** Cálculo diferencial e integral básico, y familiaridad con vectores en física.
+- **Entorno de código:** Usaremos **Python** con las librerías `numpy`, `scipy` y `matplotlib`.
+- **Formato:** Este sitio está construido con **Quarto**, lo que permite mezclar texto matemático (LaTeX) y código ejecutable de forma nativa.
+
+> *"El Álgebra Lineal es para la ciencia de la computación lo que el cálculo fue para la física del siglo XX: el motor fundamental que lo impulsa todo."*
+
+---
+
+*¿Listo para comenzar? Selecciona un capítulo en la barra lateral o inicia con el [Capítulo 3: Determinantes](determinantes.qmd).*

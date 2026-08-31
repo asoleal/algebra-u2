@@ -12,7 +12,6 @@ book:
   chapters:
     - index.qmd
     - 2.1-intuicion-geometrica.qmd
-    - 2.2-propiedades-determinantes.qmd
 
 format:
   html:
